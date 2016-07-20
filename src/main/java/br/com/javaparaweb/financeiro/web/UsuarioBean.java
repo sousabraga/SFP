@@ -1,5 +1,7 @@
 package br.com.javaparaweb.financeiro.web;
 
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -13,12 +15,19 @@ import br.com.javaparaweb.financeiro.usuario.UsuarioRN;
 public class UsuarioBean {
 
 	private Usuario usuario = new Usuario();
-	
 	private String confirmarSenha;
-
+	private List<Usuario> lista;
+	private String destinoSalvar;
+	
 	public String novo() {
+		destinoSalvar = "usuarioSucesso";
 		usuario = new Usuario();
 		usuario.setAtivo(true);
+		return "/publico/usuario";
+	}
+	
+	public String editar() {
+		confirmarSenha = usuario.getSenha();
 		return "/publico/usuario";
 	}
 	
@@ -36,7 +45,31 @@ public class UsuarioBean {
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(usuario);
 		
-		return "usuarioSucesso";
+		return destinoSalvar;
+	}
+	
+	public String excluir() {
+		UsuarioRN usuarioRN = new UsuarioRN();
+		usuarioRN.excluir(usuario);
+		lista = null;
+		return null;
+	}
+	
+	public String ativar() {
+		usuario.setAtivo(!usuario.isAtivo());
+		
+		UsuarioRN usuarioRN = new UsuarioRN();
+		usuarioRN.salvar(usuario);
+		return null;
+	}
+	
+	public List<Usuario> getLista() {
+		if (lista == null) {
+			UsuarioRN usuarioRN = new UsuarioRN();
+			lista = usuarioRN.listar();
+		}
+		
+		return lista;
 	}
 	
 	public Usuario getUsuario() {
@@ -55,4 +88,11 @@ public class UsuarioBean {
 		this.confirmarSenha = confirmarSenha;
 	}
 	
+	public String getDestinoSalvar() {
+		return destinoSalvar;
+	}
+	
+	public void setDestinoSalvar(String destinoSalvar) {
+		this.destinoSalvar = destinoSalvar;
+	}
 }
