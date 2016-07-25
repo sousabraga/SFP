@@ -14,9 +14,10 @@ public class UsuarioRN {
 	
 	public void salvar(Usuario usuario) {
 		Integer codigo = usuario.getCodigo();
-		if (codigo == null || codigo == 0) 
+		if (codigo == null || codigo == 0) {
+			usuario.getPermissao().add("ROLE_USUARIO");
 			usuarioDAO.salvar(usuario);
-		else 
+		} else 
 			usuarioDAO.atualizar(usuario);
 	}
 	

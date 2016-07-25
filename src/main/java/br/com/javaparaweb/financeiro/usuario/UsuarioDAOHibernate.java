@@ -20,6 +20,12 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	@Override
 	public void atualizar(Usuario usuario) {
+		if (usuario.getPermissao() == null || usuario.getPermissao().size() == 0) {
+			Usuario usuarioPermissao = carregar(usuario.getCodigo());
+			usuario.setPermissao(usuarioPermissao.getPermissao());
+			session.evict(usuarioPermissao); //Retira objeto do contexto persistente
+		}
+		
 		session.update(usuario);
 	}
 

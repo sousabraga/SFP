@@ -38,7 +38,13 @@
 		<id>jvnet-nexus-releases</id>
 		<name>jvnet-nexus-releases</name>
 		<url>https://maven.java.net/content/repositories/releases</url>  		
+  	</repository> 
+  	<!-- Seria adicionada junto com a biblioteca facelets-taglib-jsf20-spring-3 
+  	<repository>
+  		<id>org.springframework.security.taglibs.facelets</id>
+  		<url>http://spring-security-facelets-taglib.googlecode.com/svn/repo/</url>
   	</repository>
+  	-->  
   </repositories>
   
   <dependencies>
@@ -65,7 +71,36 @@
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
   		<version>5.1.38</version>
+  		<scope>provided</scope>
   	</dependency>
+  	<!-- Spring Framework -->
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>spring-security-web</artifactId>
+  		<version>3.2.6.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>spring-security-config</artifactId>
+  		<version>3.2.6.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-jdbc</artifactId>
+  		<version>3.2.6.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-logging</groupId>
+  		<artifactId>commons-logging</artifactId>
+  		<version>1.1.1</version>
+  	</dependency>
+  	<!-- Dependência não encontrada  
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>facelets-taglib-jsf20-spring-3</artifactId>
+  		<version>0.5</version>
+  	</dependency>
+  	-->
   </dependencies>
   
 </project>
