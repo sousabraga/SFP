@@ -19,6 +19,9 @@ import org.hibernate.annotations.NaturalId;
 @Entity
 public class Usuario implements Serializable {
 
+	/**
+	 * Serial Version UID 
+	 */
 	private static final long serialVersionUID = 3880123018639696236L;
 	
 	@Id @GeneratedValue

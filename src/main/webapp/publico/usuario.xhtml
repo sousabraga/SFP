@@ -65,7 +65,23 @@
 					required="true" redisplay="true"/>
 				
 			</h:panelGrid>
-			
+			<h:panelGroup rendered="#{empty usuarioBean.usuario.codigo}">
+				<br/>
+				<fieldset>
+					<legend>Conta Inicial</legend>
+					
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Descrição:" for="descricao"/>
+						<h:inputText id="descricao" label="Descrição" value="#{usuarioBean.conta.descricao}" required="true" maxlength="45"/>
+						
+						<h:outputLabel value="Saldo Inicial:" for="saldoInicial"/>
+						<h:inputText id="saldoInicial" label="Saldo Inicial" value="#{usuarioBean.conta.saldoInicial}" size="10">
+							<f:convertNumber minFractionDigits="2"/>
+						</h:inputText>
+					</h:panelGrid>
+				</fieldset>
+			</h:panelGroup>
+			<br/>
 			<h:commandButton action="#{usuarioBean.salvar}" value="Salvar"/>
 		</h:form>
 	</h:body>

@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.javaparaweb.financeiro.conta.Conta;
+import br.com.javaparaweb.financeiro.conta.ContaRN;
 import br.com.javaparaweb.financeiro.usuario.Usuario;
 import br.com.javaparaweb.financeiro.usuario.UsuarioRN;
 
@@ -16,9 +18,14 @@ import br.com.javaparaweb.financeiro.usuario.UsuarioRN;
 public class UsuarioBean {
 
 	private Usuario usuario = new Usuario();
+	
 	private String confirmarSenha;
+	
 	private List<Usuario> lista;
+	
 	private String destinoSalvar;
+	
+	private Conta conta = new Conta();
 	
 	public String novo() {
 		destinoSalvar = "usuarioSucesso";
@@ -45,6 +52,14 @@ public class UsuarioBean {
 		
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(usuario);
+		
+		if (getConta().getDescricao() != null) {
+			getConta().setUsuario(usuario);
+			getConta().setFavorita(true);
+			
+			ContaRN contaRN = new ContaRN();
+			contaRN.salvar(getConta());
+		}
 		
 		return destinoSalvar;
 	}
@@ -108,4 +123,13 @@ public class UsuarioBean {
 	public void setDestinoSalvar(String destinoSalvar) {
 		this.destinoSalvar = destinoSalvar;
 	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+	
 }
