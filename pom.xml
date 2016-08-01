@@ -39,6 +39,12 @@
 		<name>jvnet-nexus-releases</name>
 		<url>https://maven.java.net/content/repositories/releases</url>  		
   	</repository> 
+  	<repository>
+  		<id>prime-repo</id>
+  		<name>PrimeFaces Maven Repository</name>
+  		<url>http://repository.primefaces.org</url>
+  		<layout>default</layout>
+  	</repository>
   	<!-- Seria adicionada junto com a biblioteca facelets-taglib-jsf20-spring-3 
   	<repository>
   		<id>org.springframework.security.taglibs.facelets</id>
@@ -94,6 +100,13 @@
   		<artifactId>commons-logging</artifactId>
   		<version>1.1.1</version>
   	</dependency>
+  	<!-- PrimeFaces -->
+  	<dependency>
+  		<groupId>org.primefaces</groupId>
+  		<artifactId>primefaces</artifactId>
+		<version>5.0</version>
+  	</dependency>
+  	
   	<!-- Dependência não encontrada  
   	<dependency>
   		<groupId>org.springframework.security</groupId>
