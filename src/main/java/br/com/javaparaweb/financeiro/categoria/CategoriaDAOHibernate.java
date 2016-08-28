@@ -40,9 +40,12 @@ public class CategoriaDAOHibernate implements CategoriaDAO {
 	@Override
 	public List<Categoria> listar(Usuario usuario) {
 		String hql = "SELECT c FROM Categoria c WHERE c.pai IS NULL AND c.usuario = :usuario";
+		
 		Query query = session.createQuery(hql);
 		query.setInteger("usuario", usuario.getCodigo());
+		
 		List<Categoria> lista = query.list();
+		
 		return lista;
 	}
 

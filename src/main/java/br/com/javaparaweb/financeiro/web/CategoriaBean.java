@@ -103,16 +103,6 @@ public class CategoriaBean {
 		}
 	}
 	
-	public List<SelectItem> getCategoriasSelect() {
-		if (categoriasSelect == null) {
-			categoriasSelect = new ArrayList<>();
-			CategoriaRN categoriaRN = new CategoriaRN(); 
-			List<Categoria> categorias = categoriaRN.listar(contextoBean.getUsuarioLogado());
-			montaDadosSelect(categoriasSelect, categorias, "");
-		}
-		
-		return categoriasSelect;
-	}
 	
 	private void montaDadosSelect(List<SelectItem> select, List<Categoria> categorias, String prefixo) {
 		SelectItem item = null;
@@ -151,8 +141,19 @@ public class CategoriaBean {
 		this.contextoBean = contextoBean;
 	}
 
+	public List<SelectItem> getCategoriasSelect() {
+		if (categoriasSelect == null) {
+			categoriasSelect = new ArrayList<>();
+			CategoriaRN categoriaRN = new CategoriaRN(); 
+			List<Categoria> categorias = categoriaRN.listar(contextoBean.getUsuarioLogado());
+			montaDadosSelect(categoriasSelect, categorias, "");
+		}
+		
+		return categoriasSelect;
+	}
+	
 	public void setCategoriasSelect(List<SelectItem> categoriasSelect) {
 		this.categoriasSelect = categoriasSelect;
 	}
-	
+
 }

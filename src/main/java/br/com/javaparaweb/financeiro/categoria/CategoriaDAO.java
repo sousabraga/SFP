@@ -13,5 +13,5 @@ public interface CategoriaDAO {
 	public Categoria carregar(Integer categoria);
 	
 	public List<Categoria> listar(Usuario usuario);
-	
+
 }

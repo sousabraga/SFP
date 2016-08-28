@@ -13,7 +13,7 @@ public class CategoriaRN {
 		categoriaDAO = DAOFactory.criarCategoriaDAO();
 	}
 	
-	public List<Categoria>listar(Usuario usuario) {
+	public List<Categoria> listar(Usuario usuario) {
 		return categoriaDAO.listar(usuario);
 	}
 	
