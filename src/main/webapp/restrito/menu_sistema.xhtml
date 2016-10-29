@@ -15,6 +15,7 @@
 							<h:commandButton value="Contas" action="/restrito/conta"/> 
 							<h:commandButton value="Categorias" action="/restrito/categoria"/>
 							<h:commandButton value="Lançamentos" action="/restrito/lancamento"/>
+							<h:commandButton value="Cheques" action="/restrito/cheque"/>
 							<h:selectOneMenu value="#{contextoBean.contaAtiva.conta}" valueChangeListener="#{contextoBean.changeContaAtiva}" 
 								rendered="#{not empty contextoBean and not empty contextoBean.contaAtiva}" onchange="submit()">
 								<f:selectItems value="#{contaBean.lista}" var="conta" itemValue="#{conta.conta}" itemLabel="#{conta.descricao}"/>
