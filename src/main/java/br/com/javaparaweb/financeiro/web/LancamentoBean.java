@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -14,6 +15,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.primefaces.model.StreamedContent;
+
 import br.com.javaparaweb.financeiro.categoria.Categoria;
 import br.com.javaparaweb.financeiro.cheque.Cheque;
 import br.com.javaparaweb.financeiro.cheque.ChequeId;
@@ -22,6 +25,8 @@ import br.com.javaparaweb.financeiro.conta.Conta;
 import br.com.javaparaweb.financeiro.lancamento.Lancamento;
 import br.com.javaparaweb.financeiro.lancamento.LancamentoRN;
 import br.com.javaparaweb.financeiro.util.RNException;
+import br.com.javaparaweb.financeiro.util.RelatorioUtil;
+import br.com.javaparaweb.financeiro.util.UtilException;
 
 @ManagedBean
 @ViewScoped
@@ -46,6 +51,12 @@ public class LancamentoBean implements Serializable {
 	private ContextoBean contextoBean;
 	
 	private Integer numeroCheque;
+	
+	private Date dataInicialRelatorio;
+	
+	private Date dataFinalRelatorio;
+	
+	private StreamedContent arquivoRetorno;
 	
 	public LancamentoBean() {
 		novo();
@@ -209,6 +220,64 @@ public class LancamentoBean implements Serializable {
 
 	public void setNumeroCheque(Integer numeroCheque) {
 		this.numeroCheque = numeroCheque;
+	}
+
+	public Date getDataInicialRelatorio() {
+		return dataInicialRelatorio;
+	}
+
+	public void setDataInicialRelatorio(Date dataInicialRelatorio) {
+		this.dataInicialRelatorio = dataInicialRelatorio;
+	}
+
+	public Date getDataFinalRelatorio() {
+		return dataFinalRelatorio;
+	}
+
+	public void setDataFinalRelatorio(Date dataFinalRelatorio) {
+		this.dataFinalRelatorio = dataFinalRelatorio;
+	}
+
+	public StreamedContent getArquivoRetorno() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		String usuario = contextoBean.getUsuarioLogado().getLogin();
+		
+		String nomeRelatorioJasper = "extrato";
+		String nomeRelatorioSaida = usuario + "_extrato";
+		
+		LancamentoRN lancamentoRN = new LancamentoRN();
+		
+		GregorianCalendar calendario = new GregorianCalendar();
+		calendario.setTime(getDataInicialRelatorio());
+		calendario.add(Calendar.DAY_OF_MONTH, -1);
+		
+		Date dataSaldo = new Date(calendario.getTimeInMillis());
+		
+		RelatorioUtil relatorioUtil = new RelatorioUtil();
+		
+		HashMap<String, Object> parametrosRelatorio = new HashMap<>();
+		parametrosRelatorio.put("codigoUsuario", contextoBean.getUsuarioLogado().getCodigo());
+		parametrosRelatorio.put("numeroConta", contextoBean.getContaAtiva().getConta());
+		parametrosRelatorio.put("dataInicial", getDataInicialRelatorio());
+		parametrosRelatorio.put("dataFinal", getDataFinalRelatorio());
+		parametrosRelatorio.put("saldoAnterior", lancamentoRN.saldo(contextoBean.getContaAtiva(), dataSaldo));
+		
+		try {
+			
+			arquivoRetorno = relatorioUtil.gerarRelatorio(parametrosRelatorio, nomeRelatorioJasper, 
+					nomeRelatorioSaida, RelatorioUtil.RELATORIO_PDF);
+					
+		} catch (UtilException e) {
+			context.addMessage(null, new FacesMessage(e.getMessage()));
+			return null;
+		}
+		
+		return arquivoRetorno;
+	}
+
+	public void setArquivoRetorno(StreamedContent arquivoRetorno) {
+		this.arquivoRetorno = arquivoRetorno;
 	}
 	
 }
