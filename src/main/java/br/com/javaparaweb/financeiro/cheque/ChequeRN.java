@@ -82,7 +82,6 @@ public class ChequeRN {
 	
 	public void desvinculaLancamento(Conta conta, Integer numeroCheque) throws RNException {
 		ChequeId chequeId = new ChequeId(conta.getConta(), numeroCheque);
-		
 		Cheque cheque = this.carregar(chequeId);
 		
 		if (cheque == null) {
